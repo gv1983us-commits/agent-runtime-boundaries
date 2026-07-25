@@ -1,7 +1,7 @@
 # Publication Manifest
 
 **Candidate:** Agent Runtime Boundaries 0.1
-**Status:** NOT READY FOR PUBLICATION
+**Status:** PUBLISHED PUBLIC DRAFT
 **Prepared:** 2026-07-25
 
 ## Candidate files
@@ -25,8 +25,8 @@
 - [x] No private Git history is present in the candidate folder.
 - [x] Public repository name and owner confirmed: `gv1983us-commits/agent-runtime-boundaries`.
 - [x] Apache License, Version 2.0 selected and added as `LICENSE`.
-- [ ] Fresh Git history initialized from candidate files only.
-- [ ] Public remote verified after push.
+- [x] Fresh Git history initialized from candidate files only.
+- [x] Public remote created and verified after push.
 
 ## Authoring-pass self-check
 
@@ -65,9 +65,14 @@ All four reported divergence `0/0`.
 
 **Scope finding:** `ARB-03` remains correctly bounded as a proposal. It does not amend MPAA, PCA or BEC. The PCA naming discrepancy is accurately reported without silently resolving it.
 
-## Current blockers
+## Publication result
 
-1. Fresh Git history has not yet been initialized from candidate files only.
-2. Public remote has not yet been created and verified after push.
+- Repository: `https://github.com/gv1983us-commits/agent-runtime-boundaries`
+- Visibility: `PUBLIC`
+- Default branch: `main`
+- Initial published commit: `dd8c11d1cb06164f9c010d430dedb1fa2f206bb1`
+- Initial local/remote divergence after push: `0/0`
 
-Until all blockers are closed, this folder is a local candidate only.
+## Deliberately not performed
+
+The previous private remote was not changed, deleted or made public by this publication. Its future is a separate decision after local preservation has been confirmed.

@@ -1,6 +1,6 @@
 # Agent Runtime Boundaries
 
-**Status:** Draft public candidate 0.1 — not yet published
+**Status:** Public draft 0.1
 **Mode:** Descriptive and analytical companion material
 **Normative force:** None outside explicitly identified proposals
 
@@ -57,12 +57,7 @@ It does not amend, replace, or become canonical for any of them. Each referenced
 
 ## Publication status
 
-This folder is a candidate, not a released repository. It MUST NOT be published until:
-
-- an independent disclosure and scope review is complete;
-- the public repository name and owner are confirmed;
-- a public license is selected;
-- the publication manifest reports no blocking issue.
+This repository was published as a public draft on 2026-07-25. It is not canonical for MPAA, PCA, BEC or the Review Protocol, and it does not amend them. Its descriptive and proposal statuses remain as declared in each document.
 
 ## License
 
