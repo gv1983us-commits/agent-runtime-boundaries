@@ -30,7 +30,7 @@ BEC:             bb46f5f8aac96d1cffba7a334c5d17fb331ef3af
 Review Protocol: 595c08b877e4dfb14593454c2eec7c8f5df46c28
 ```
 
-All four public `main` references were resolved again before review. Eight exact source-file links used by ARB-04 were checked through the repository API.
+All four public `main` references were resolved again before review. Nine exact source-file links used by ARB-04 were checked through the repository API.
 
 ## Separate-context adversarial pass
 
@@ -52,7 +52,21 @@ ARB-04 initially labeled its list as **Exact files used for this mapping** but o
 
 This was a real source-parity defect: the analytical claims reached owning surfaces not disclosed in the source list.
 
-**Remediation:** both files and their exact pinned links were added to ARB-04. The publication checker now requires all eight named source paths used by the mapping. The two added links were resolved successfully at the pinned MPAA revision.
+**Remediation:** both required files and their exact pinned links were added to ARB-04. Because the mapping also retains a general statement about MPAA internal architecture, `spec/01_AGENT_CORE.md` was added as the corresponding owning surface. The publication checker now requires all nine named source paths used by the mapping.
+
+### P2 — delivery surface overstated
+
+The first candidate said that MPAA may report runtime output in the `delivered` row. The pinned Runtime Report schema owns task result and execution-state/evidence representation, but does not define canonical delivery evidence; the Runtime Contract also distinguishes transmission from delivery.
+
+**Remediation:** ARB-04 now says that MPAA may report task result/execution outcome, that its base Runtime Report schema does not define delivery evidence, and that delivery needs a separate evidence/extension or future owning surface.
+
+### P2 — commitment and PCA receipts conflated
+
+The first candidate used `commitment/transition receipt`, allowing a PCA transition receipt to be read as an alternative proof of operational commitment.
+
+**Remediation:** ARB-04 now requires a commitment receipt from the owner that defines commit. If PCA continuation is also claimed, it additionally requires a separate PCA Transition Record and transition receipt.
+
+The complete asynchronous finding summary became available after the first merge. These P2 findings were therefore closed in a corrective pull request rather than silently treated as part of the earlier pass.
 
 ## Boundary findings after remediation
 
@@ -67,10 +81,10 @@ This was a real source-parity defect: the analytical claims reached owning surfa
 ## Deterministic checks
 
 ```text
-publication tests: 10 / 10 PASS
+publication tests: 11 / 11 PASS
 Python compile: PASS
 pinned public main revisions: 4 / 4 resolved
-pinned source-file links: 8 / 8 resolved
+pinned source-file links: 9 / 9 resolved
 Markdown table shape errors: 0
 broken relative links: 0
 stale PCA nomenclature: 0
@@ -86,7 +100,7 @@ The publication checker intentionally does not claim to verify analytical truth,
 ## Verdict
 
 ```text
-PASS AFTER P1 REMEDIATION
+PASS AFTER P1 AND P2 REMEDIATION
 ```
 
 No blocking disclosure or normative-ownership defect remains in the reviewed candidate. The result applies to the fixed source revisions and candidate state identified above; later changes require a new review.
