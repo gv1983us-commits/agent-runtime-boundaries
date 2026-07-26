@@ -1,9 +1,9 @@
 # Functional Boundaries in Agent Systems
 
 **Document:** ARB-01
-**Status:** DRAFT
+**Status:** PUBLIC DRAFT
 **Mode:** FUNCTIONAL RECONSTRUCTION
-**Version:** 0.1-candidate
+**Version:** 0.2
 
 ## 1. Boundary model
 

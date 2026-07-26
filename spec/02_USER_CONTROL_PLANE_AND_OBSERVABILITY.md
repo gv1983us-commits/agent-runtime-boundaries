@@ -1,9 +1,9 @@
 # User Control Plane and Observability
 
 **Document:** ARB-02
-**Status:** DRAFT
+**Status:** PUBLIC DRAFT
 **Mode:** FUNCTIONAL RECONSTRUCTION
-**Version:** 0.1-candidate
+**Version:** 0.2
 
 ## 1. Purpose
 

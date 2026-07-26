@@ -1,9 +1,9 @@
 # Closure, Provenance and the Next Action
 
 **Document:** ARB-03
-**Status:** PROPOSAL
+**Status:** PUBLIC DRAFT — PROPOSAL
 **Mode:** OPERATIONAL PROPOSAL
-**Version:** 0.1-candidate
+**Version:** 0.2
 
 ## 1. Problem
 
@@ -63,6 +63,23 @@ retained_candidates:
 
 This is an illustrative proposal, not a schema required by MPAA, PCA or BEC.
 
+### 3.1 Closure is not commitment
+
+The proposal preserves separate claims:
+
+```text
+BEC `closed` != `delivered`
+`delivered` != `persisted`
+`persisted` != `retrievable`
+`retrievable` != admitted into working state
+working state present != `committed`
+`committed` != PCA process continuation
+```
+
+A closure record may reference receipts for these events, but its presence does not establish any of them. In particular, `status: completed` is local to this illustrative ARB record and MUST NOT be renamed as BEC `closed`, BEC `FULL-for-task`, a committed next state, or a PCA result.
+
+The detailed ownership and evidence mapping is in [ARB-04](04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md). ARB-04 identifies candidate homes for future rules but does not select a normative owner.
+
 ## 4. Restoration before the next action
 
 Before the next action, the system reconstructs task-relevant working state from declared inputs rather than treating the previous response as an undifferentiated instruction.
@@ -102,9 +119,12 @@ This proposal classifies that transition as unsupported promotion. The explanati
 
 ## 7. Relationship to public specifications
 
-- BEC can describe task execution, capability use, evidence and remaining open work. This proposal does not replace a BEC record.
-- PCA can assess provenance and continuity across a transition. This proposal does not establish continuity by itself.
-- MPAA separates architecture, identity profile and runtime contract. This proposal does not grant authority or modify those layers.
+- BEC owns task execution evidence, deployment level, return state, and remaining open work inside a BEC claim tree. BEC `closed` explicitly does not establish next-state commitment.
+- PCA owns bounded process-continuation assessment across an explicit transition. A closure record, execution result, or restored artifact does not establish PCA continuation.
+- MPAA owns its architecture, Identity Profile, Runtime Contract, authorization, Runtime Report, and MPAA conformance. A free-form authority reference does not grant authorization or alter those layers.
+- ARB owns none of those normative results. This proposal preserves distinctions and candidate fields only.
+
+[ARB-04](04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md) records the exact pinned revisions, allowed mappings, forbidden inferences, evidence requirements, and unresolved candidate homes. A citation carries a trace; it does not import the cited system's conclusion.
 
 ## 8. Validation status
 
