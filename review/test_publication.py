@@ -70,6 +70,7 @@ class PublicationChecks(unittest.TestCase):
             self.assertIn(sha, text)
         for source_path in (
             "spec/00_SESSION_BOOTSTRAP.md",
+            "spec/01_AGENT_CORE.md",
             "spec/02_IDENTITY_PROFILE_SPEC.md",
             "spec/03_RUNTIME_CONTRACT.md",
             "spec/05_RUNTIME_REPORT_SCHEMA.md",
@@ -100,6 +101,15 @@ class PublicationChecks(unittest.TestCase):
         )
         for boundary in required_boundaries:
             self.assertIn(boundary, text)
+
+    def test_late_review_findings_are_closed(self):
+        text = MAPPING.read_text(encoding="utf-8")
+        self.assertIn("spec/01_AGENT_CORE.md", text)
+        self.assertIn("base Runtime Report schema does not define delivery evidence", text)
+        self.assertIn("commitment receipt from the owner that defines commit", text)
+        self.assertIn("separate PCA Transition Record", text)
+        self.assertNotIn("MPAA may report runtime output", text)
+        self.assertNotIn("commitment/transition receipt", text)
 
     def test_no_stale_pca_nomenclature(self):
         for path in public_files():
