@@ -8,6 +8,7 @@ Review this repository as a public candidate, not as evidence about an unpublish
 2. Do not reconstruct missing private material from names, prior chats or memory.
 3. Report source discrepancies before drawing architectural conclusions.
 4. Do not treat this repository as canonical for MPAA, PCA or BEC.
+5. Use `spec/04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md` for cross-domain mappings; do not infer an unstated equivalence.
 
 ## Claim discipline
 
@@ -15,6 +16,7 @@ Review this repository as a public candidate, not as evidence about an unpublish
 - Do not infer physical model modules from functional boundaries.
 - Do not infer execution from fluent text or a visible progress label.
 - Do not infer continuity from a name, style or retained artifact alone.
+- Do not infer next-state commitment from BEC `closed`, delivery, persistence, or retrieval alone.
 - Do not grant a prior hypothesis authority merely because it appears earlier in the corpus.
 
 ## Public-boundary discipline

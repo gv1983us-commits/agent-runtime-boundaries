@@ -1,9 +1,9 @@
 # Scope and Status
 
 **Document:** ARB-00
-**Status:** DRAFT
+**Status:** PUBLIC DRAFT
 **Mode:** DESCRIPTIVE / ANALYTICAL
-**Version:** 0.1-candidate
+**Version:** 0.2
 
 ## 1. Scope
 
@@ -27,6 +27,7 @@ This document set does not define:
 - a specific product, provider, model or deployment;
 - legal or organizational authority;
 - a replacement for MPAA, PCA or BEC;
+- a cross-step commitment, storage, retrieval, memory or continuation protocol;
 - conformance to any external specification.
 
 ## 3. Claim classes
@@ -41,7 +42,7 @@ Every substantive statement should be readable as one of these classes:
 | PROPOSAL | A candidate operational rule that requires implementation and testing before stronger status. |
 | UNKNOWN | A matter not established by available public evidence. |
 
-Capitalized requirement words such as MUST or SHOULD are used only for the internal integrity of this candidate document set or inside an explicitly marked proposal. They do not impose requirements on MPAA, PCA, BEC or external implementations.
+Capitalized requirement words such as MUST or SHOULD are used only for the internal integrity of this public draft document set or inside an explicitly marked proposal. They do not impose requirements on MPAA, PCA, BEC or external implementations.
 
 ## 4. Neutral terminology
 
@@ -56,6 +57,8 @@ Capitalized requirement words such as MUST or SHOULD are used only for the inter
 | PERSISTENT CORPUS | Addressable artifacts that may support later reconstruction or review. Existence does not imply retrieval or use. |
 | RESOURCE | A file, service, database, tool or other addressable object available through the runtime. |
 | EVIDENCE | A trace that supports or contests a claim. Evidence strength depends on its trust anchor and verification method. |
+
+These are ARB terms only. [ARB-04](04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md) records partial mappings and non-equivalence rules; vocabulary overlap does not import another specification's definition or result.
 
 ## 5. Epistemic boundary
 
