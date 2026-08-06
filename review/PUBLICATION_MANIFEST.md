@@ -105,13 +105,14 @@ The update is reviewed against exact owning sources and subjected to determinist
 - every relation keeps `conclusion_imported: false`;
 - the rejected inference chain is published;
 - all relative links resolve;
-- Markdown fences, final newlines, tables, and trailing whitespace pass;
+- Markdown fences, final newlines, tables, and end-of-line policy pass;
+- Markdown lines use either no trailing spaces or exactly two spaces for a hard break;
 - all specification documents declare status, mode, and version;
 - no stale PCA nomenclature remains;
 - no local path or credential marker is present;
 - Apache-2.0 remains tied to `LICENSE`;
 - Python 3.10, 3.11, 3.12, and 3.13 complete the full suite;
-- `git show --check --oneline HEAD` passes.
+- `git -c core.whitespace=-blank-at-eol show --check --oneline HEAD` passes for non-Markdown-EOL whitespace errors.
 
 ## Ownership formula
 
