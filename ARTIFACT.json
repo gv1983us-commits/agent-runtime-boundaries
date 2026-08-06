@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "claude.arb",
+  "title": "Agent Runtime Boundaries",
+  "repository": "gv1983us-commits/agent-runtime-boundaries",
+  "artifact_version": "0.3-draft",
+  "artifact_status": "canonical_public_draft",
+  "specification_status": "descriptive_analytical_companion",
+  "license": "Apache-2.0",
+  "claim_domain": "non_normative_functional_boundary_analysis",
+  "normative_authority_model": "zero_normative_surfaces_with_analytical_domain_ownership_and_explicit_proposal_isolation",
+  "normative_surface_count": 0,
+  "analytical_surface_count": 4,
+  "proposal_surface_count": 1,
+  "analytical_surfaces": [
+    {
+      "path": "spec/00_SCOPE_AND_STATUS.md",
+      "domain": "scope_claim_classes_neutral_terms_and_epistemic_boundary"
+    },
+    {
+      "path": "spec/01_FUNCTIONAL_BOUNDARIES.md",
+      "domain": "functional_responsibility_and_independent_failure_boundaries"
+    },
+    {
+      "path": "spec/02_USER_CONTROL_PLANE_AND_OBSERVABILITY.md",
+      "domain": "control_plane_authorization_observability_and_result_projection"
+    },
+    {
+      "path": "spec/04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md",
+      "domain": "fixed_revision_cross_artifact_analytical_mapping"
+    }
+  ],
+  "proposal_surfaces": [
+    {
+      "path": "spec/03_CLOSURE_PROVENANCE_AND_NEXT_ACTION.md",
+      "proposal_id": "ARB-03",
+      "status": "public_draft_proposal",
+      "adopted": false,
+      "normative_owner_selected": false,
+      "multi_implementation_conformance_claimed": false
+    }
+  ],
+  "canonical_surfaces": {
+    "human_entry": "README.md",
+    "canon": "CANON.md",
+    "machine_passport": "ARTIFACT.json",
+    "relations": "RELATIONS.md",
+    "provenance": "PROVENANCE.md",
+    "analytical_corpus": "spec/",
+    "source_receipt": "references/RELATED_PUBLIC_SPECS.md",
+    "publication_manifest": "review/PUBLICATION_MANIFEST.md",
+    "verification": "review/"
+  },
+  "reference_implementation": {
+    "path": "review/test_publication.py",
+    "normative": false,
+    "role": "publication_integrity_checker"
+  },
+  "canonical_checks": [
+    "python -m unittest discover -s review -p \"test_*.py\" -v",
+    "python -m json.tool ARTIFACT.json >/dev/null",
+    "git show --check --oneline HEAD"
+  ],
+  "claim_classes": [
+    "OBSERVATION",
+    "FUNCTIONAL_RECONSTRUCTION",
+    "ANALYTICAL_INTERPRETATION",
+    "PROPOSAL",
+    "UNKNOWN"
+  ],
+  "assertion_boundaries": {
+    "physical_module_separation_established": false,
+    "hidden_runtime_internals_observed": false,
+    "model_output_verified_reasoning": false,
+    "visible_status_establishes_execution": false,
+    "delivery_establishes_commitment": false,
+    "persistence_establishes_retrieval": false,
+    "retrieval_establishes_working_state_admission": false,
+    "working_state_establishes_commitment": false,
+    "commitment_establishes_process_continuation": false,
+    "identity_or_memory_established": false,
+    "neighbor_conformance_imported": false,
+    "external_normative_force_claimed": false,
+    "final_standard_claimed": false,
+    "world_truth_evaluated": false
+  },
+  "relations": [
+    {
+      "artifact_id": "claude.bec",
+      "repository": "gv1983us-commits/behavioral-execution-contract",
+      "reviewed_revision": "62f2b7940b5ca7a4a8b24150b9c45a6ab5d97261",
+      "relation": "analytical_execution_evidence_boundary_without_bec_verdict_ownership",
+      "conclusion_imported": false
+    },
+    {
+      "artifact_id": "claude.mpaa",
+      "repository": "gv1983us-commits/mpaa",
+      "reviewed_revision": "0d1aaf35cc4826622f3312fdd2a1c2d40890b965",
+      "relation": "analytical_runtime_and_control_plane_mapping_without_mpaa_amendment",
+      "conclusion_imported": false
+    },
+    {
+      "artifact_id": "claude.pca",
+      "repository": "gv1983us-commits/pca",
+      "reviewed_revision": "a669f023198615ad929f42df84f19380b57ca5ea",
+      "relation": "analytical_state_transition_and_continuation_boundary_without_pca_status",
+      "conclusion_imported": false
+    },
+    {
+      "artifact_id": "claude.review_protocol",
+      "repository": "gv1983us-commits/repository-canon-review-protocol",
+      "reviewed_revision": "b4205ffd91a6316ab40243cbf8161a1c512cae1f",
+      "relation": "fixed_source_review_discipline_without_review_receipt_authority_transfer",
+      "conclusion_imported": false
+    },
+    {
+      "artifact_id": "claude.cdts",
+      "repository": "gv1983us-commits/cdts",
+      "reviewed_revision": "f91dbc003519efd5264655d905d0530dbfeac2fd",
+      "relation": "analytical_context_may_be_correlated_without_arb_as_normative_owner_or_trace_verdict",
+      "conclusion_imported": false
+    }
+  ]
+}
