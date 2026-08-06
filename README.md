@@ -140,8 +140,10 @@ ARB does not amend, replace, validate, or import a conclusion from any neighbor.
 ```bash
 python -m unittest discover -s review -p "test_*.py" -v
 python -m json.tool ARTIFACT.json >/dev/null
-git show --check --oneline HEAD
+git -c core.whitespace=-blank-at-eol show --check --oneline HEAD
 ```
+
+The publication checker owns the stricter Markdown end-of-line rule: only no trailing spaces or the exact two-space hard break are accepted. The Git command continues to reject other whitespace errors.
 
 GitHub Actions runs the complete Python suite on 3.10, 3.11, 3.12, and 3.13.
 
