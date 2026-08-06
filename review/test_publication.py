@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 import unittest
 from pathlib import Path
@@ -10,20 +11,36 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MAPPING = ROOT / "spec" / "04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md"
 REFERENCES = ROOT / "references" / "RELATED_PUBLIC_SPECS.md"
+CANON = ROOT / "CANON.md"
+ARTIFACT = ROOT / "ARTIFACT.json"
+RELATIONS = ROOT / "RELATIONS.md"
+PROPOSAL = ROOT / "spec" / "03_CLOSURE_PROVENANCE_AND_NEXT_ACTION.md"
+MANIFEST = ROOT / "review" / "PUBLICATION_MANIFEST.md"
 
 STALE_PCA_NAME = "Persistent" + " Continuity Architecture"
 
 PINNED = {
-    "MPAA": "1d369f6cd091b99f9492cfaf730f0a170b55106e",
-    "PCA": "6ad1a86d7c09b36839d162c580f84f05cfe4a598",
-    "BEC": "bb46f5f8aac96d1cffba7a334c5d17fb331ef3af",
-    "Review Protocol": "595c08b877e4dfb14593454c2eec7c8f5df46c28",
+    "BEC": "62f2b7940b5ca7a4a8b24150b9c45a6ab5d97261",
+    "MPAA": "0d1aaf35cc4826622f3312fdd2a1c2d40890b965",
+    "PCA": "a669f023198615ad929f42df84f19380b57ca5ea",
+    "Review Protocol": "b4205ffd91a6316ab40243cbf8161a1c512cae1f",
+    "CDTS": "f91dbc003519efd5264655d905d0530dbfeac2fd",
+}
+REPOSITORIES = {
+    "BEC": "gv1983us-commits/behavioral-execution-contract",
+    "MPAA": "gv1983us-commits/mpaa",
+    "PCA": "gv1983us-commits/pca",
+    "Review Protocol": "gv1983us-commits/repository-canon-review-protocol",
+    "CDTS": "gv1983us-commits/cdts",
 }
 REQUIRED_MAPPING_HEADINGS = (
-    "## 1. MPAA ↔ BEC",
-    "## 2. MPAA ↔ PCA",
-    "## 3. BEC ↔ PCA",
-    "## 4. ARB-03 closure proposal ↔ normative domains",
+    "## 4. ARB ↔ BEC",
+    "## 5. ARB ↔ MPAA",
+    "## 6. ARB ↔ PCA",
+    "## 7. ARB ↔ Review Protocol",
+    "## 8. ARB ↔ CDTS",
+    "## 9. ARB-03 closure proposal",
+    "## 10. Rejected composite inferences",
 )
 REQUIRED_TERMS = (
     "capability",
@@ -41,7 +58,7 @@ REQUIRED_TERMS = (
     "`retrievable`",
     "working state",
     "PCA `CORPUS`",
-    "ARB `PERSISTENT CORPUS`",
+    "ARB is not a normative owner",
 )
 
 
@@ -52,70 +69,104 @@ def public_files():
 
 
 class PublicationChecks(unittest.TestCase):
-    def test_mapping_surface_exists(self):
-        self.assertTrue(MAPPING.is_file(), "cross-specification mapping is missing")
+    def test_canonical_surfaces_exist(self):
+        for path in (CANON, ARTIFACT, RELATIONS, MAPPING, REFERENCES, PROPOSAL, MANIFEST):
+            self.assertTrue(path.is_file(), f"missing {path.relative_to(ROOT)}")
 
-    def test_references_pin_current_accepted_commits(self):
+    def test_references_pin_current_five_source_set(self):
         text = REFERENCES.read_text(encoding="utf-8")
+        self.assertIn("2026-08-06", text)
         for owner, sha in PINNED.items():
-            self.assertIn(sha, text, f"{owner} is not pinned to accepted commit {sha}")
+            with self.subTest(owner=owner):
+                self.assertIn(sha, text, f"{owner} is not pinned to {sha}")
+                self.assertIn(REPOSITORIES[owner], text)
+                root = f"https://github.com/{REPOSITORIES[owner]}/tree/{sha}"
+                self.assertIn(root, text)
 
-    def test_mapping_has_four_required_tables_and_terms(self):
+    def test_mapping_has_five_neighbor_sections_and_required_terms(self):
         text = MAPPING.read_text(encoding="utf-8")
         for heading in REQUIRED_MAPPING_HEADINGS:
             self.assertIn(heading, text)
         for term in REQUIRED_TERMS:
             self.assertIn(term, text)
-        for sha in PINNED.values():
-            self.assertIn(sha, text)
-        for source_path in (
-            "spec/00_SESSION_BOOTSTRAP.md",
-            "spec/01_AGENT_CORE.md",
-            "spec/02_IDENTITY_PROFILE_SPEC.md",
-            "spec/03_RUNTIME_CONTRACT.md",
-            "spec/05_RUNTIME_REPORT_SCHEMA.md",
-            "spec/01_BEC_COMPACT_CORE.md",
-            "conformance/README.md",
-            "spec/01_PCA_CORE.md",
-            "repository-canon-and-review-protocol-v0.1.md",
+        for owner, sha in PINNED.items():
+            with self.subTest(owner=owner):
+                self.assertIn(sha, text)
+                self.assertIn(REPOSITORIES[owner], REFERENCES.read_text(encoding="utf-8"))
+
+    def test_mapping_publishes_rejected_inference_chain(self):
+        text = MAPPING.read_text(encoding="utf-8")
+        for marker in (
+            "reasoning about an action != execution",
+            "visible status != execution evidence",
+            "delivered != persisted",
+            "persisted != retrievable",
+            "retrievable != admitted into working state",
+            "working state present != committed",
+            "committed != PCA process continuation",
+            "process continuation != identity-profile continuity",
         ):
-            self.assertIn(source_path, text)
-        pinned_roots = (
-            f"https://github.com/gv1983us-commits/mpaa/tree/{PINNED['MPAA']}",
-            f"https://github.com/gv1983us-commits/pca/tree/{PINNED['PCA']}",
-            f"https://github.com/gv1983us-commits/behavioral-execution-contract/tree/{PINNED['BEC']}",
-            f"https://github.com/gv1983us-commits/repository-canon-review-protocol/tree/{PINNED['Review Protocol']}",
-        )
-        reference_text = REFERENCES.read_text(encoding="utf-8")
-        for url in pinned_roots:
-            self.assertIn(url, text)
-            self.assertIn(url, reference_text)
+            self.assertIn(marker, text)
 
     def test_arb_does_not_claim_normative_ownership(self):
-        text = MAPPING.read_text(encoding="utf-8").lower()
-        required_boundaries = (
-            "analytical companion",
-            "does not transfer normative ownership",
-            "does not select a normative home",
-            "no equivalence",
-        )
-        for boundary in required_boundaries:
-            self.assertIn(boundary, text)
+        artifact = json.loads(ARTIFACT.read_text(encoding="utf-8"))
+        self.assertEqual(artifact["normative_surface_count"], 0)
+        self.assertFalse(artifact["reference_implementation"]["normative"])
+        self.assertTrue(all(value is False for value in artifact["assertion_boundaries"].values()))
 
-    def test_late_review_findings_are_closed(self):
-        text = MAPPING.read_text(encoding="utf-8")
-        self.assertIn("spec/01_AGENT_CORE.md", text)
-        self.assertIn("base Runtime Report schema does not define delivery evidence", text)
-        self.assertIn("commitment receipt from the owner that defines commit", text)
-        self.assertIn("separate PCA Transition Record", text)
-        self.assertNotIn("MPAA may report runtime output", text)
-        self.assertNotIn("commitment/transition receipt", text)
+        combined = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (CANON, RELATIONS, MAPPING, PROPOSAL)
+        ).lower()
+        for boundary in (
+            "zero normative",
+            "does not transfer normative ownership",
+            "arb is not a normative owner",
+            "does not select a normative owner",
+            "no equivalence",
+        ):
+            self.assertIn(boundary, combined)
+
+    def test_proposal_remains_explicitly_unadopted(self):
+        artifact = json.loads(ARTIFACT.read_text(encoding="utf-8"))
+        self.assertEqual(len(artifact["proposal_surfaces"]), 1)
+        proposal_record = artifact["proposal_surfaces"][0]
+        self.assertFalse(proposal_record["adopted"])
+        self.assertFalse(proposal_record["normative_owner_selected"])
+        self.assertFalse(proposal_record["multi_implementation_conformance_claimed"])
+
+        text = PROPOSAL.read_text(encoding="utf-8")
+        for marker in (
+            "PUBLIC DRAFT — PROPOSAL",
+            "**Adopted:** No",
+            "**Normative owner selected:** No",
+            "illustrative proposal",
+            "remains a proposal",
+        ):
+            self.assertIn(marker, text)
+
+    def test_all_relations_are_fixed_and_non_importing(self):
+        artifact = json.loads(ARTIFACT.read_text(encoding="utf-8"))
+        relations = {item["artifact_id"]: item for item in artifact["relations"]}
+        self.assertEqual(
+            set(relations),
+            {
+                "claude.bec",
+                "claude.mpaa",
+                "claude.pca",
+                "claude.review_protocol",
+                "claude.cdts",
+            },
+        )
+        for item in relations.values():
+            self.assertRegex(item["reviewed_revision"], r"^[0-9a-f]{40}$")
+            self.assertFalse(item["conclusion_imported"])
 
     def test_no_stale_pca_nomenclature(self):
         for path in public_files():
             if path.resolve() == Path(__file__).resolve():
                 continue
-            if path.suffix.lower() not in {".md", ".py", ".yml", ".yaml"}:
+            if path.suffix.lower() not in {".md", ".py", ".json", ".yml", ".yaml"}:
                 continue
             text = path.read_text(encoding="utf-8")
             self.assertNotIn(STALE_PCA_NAME, text, str(path.relative_to(ROOT)))
@@ -124,6 +175,7 @@ class PublicationChecks(unittest.TestCase):
         forbidden = re.compile(
             r"(C:\\Users\\|/c/Users/|/Users/|/home/|AppData|credentials\.json|"
             r"BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY|ghp_[A-Za-z0-9]+|"
+            r"github_pat_[A-Za-z0-9_]+|sk-[A-Za-z0-9]+|AKIA[0-9A-Z]{16}|"
             r"api[_-]?key\s*[:=]|access[_-]?token\s*[:=])",
             re.IGNORECASE,
         )
@@ -149,40 +201,62 @@ class PublicationChecks(unittest.TestCase):
                 if line.startswith("|") and line.endswith("|"):
                     table.append((number, line.count("|")))
                 elif table:
-                    self.assertEqual(1, len({count for _, count in table}), f"malformed table: {path.relative_to(ROOT)}:{table[0][0]}")
+                    self.assertEqual(
+                        1,
+                        len({count for _, count in table}),
+                        f"malformed table: {path.relative_to(ROOT)}:{table[0][0]}",
+                    )
                     table = []
             for target in link_re.findall(text):
                 relative = target.split("#", 1)[0]
                 if relative:
-                    self.assertTrue((path.parent / relative).resolve().exists(), f"broken link: {path.relative_to(ROOT)} -> {target}")
+                    self.assertTrue(
+                        (path.parent / relative).resolve().exists(),
+                        f"broken link: {path.relative_to(ROOT)} -> {target}",
+                    )
 
-    def test_spec_documents_declare_status_and_mode(self):
+    def test_spec_documents_declare_status_mode_and_version(self):
         for path in (ROOT / "spec").glob("*.md"):
             text = path.read_text(encoding="utf-8")
             self.assertIn("**Status:**", text, str(path.relative_to(ROOT)))
             self.assertIn("**Mode:**", text, str(path.relative_to(ROOT)))
+            self.assertIn("**Version:** 0.3", text, str(path.relative_to(ROOT)))
 
-    def test_entry_points_expose_mapping_and_proposal_boundary(self):
+    def test_entry_points_expose_canon_mapping_and_proposal_boundary(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        closure = (ROOT / "spec" / "03_CLOSURE_PROVENANCE_AND_NEXT_ACTION.md").read_text(encoding="utf-8")
-        self.assertIn("04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md", readme)
-        self.assertIn("04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md", closure)
-        for term in ("`closed`", "`committed`", "`delivered`", "`persisted`", "`retrievable`"):
-            self.assertIn(term, closure)
-        self.assertIn("does not select a normative owner", closure)
+        agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        for text in (readme, agents):
+            self.assertIn("CANON.md", text)
+            self.assertIn("ARTIFACT.json", text)
+            self.assertIn("04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md", text)
+            self.assertIn("normative_surface_count", text)
+            self.assertIn("ARB-03", text)
+            self.assertIn("CDTS", text)
 
-    def test_ci_and_manifest_cover_publication_checker(self):
+    def test_ci_and_manifest_cover_complete_checker(self):
         workflow = ROOT / ".github" / "workflows" / "docs.yml"
         self.assertTrue(workflow.is_file(), "docs CI workflow is missing")
-        manifest = (ROOT / "review" / "PUBLICATION_MANIFEST.md").read_text(encoding="utf-8")
+        manifest = MANIFEST.read_text(encoding="utf-8")
         for path in (
+            "CANON.md",
+            "ARTIFACT.json",
+            "RELATIONS.md",
+            "PROVENANCE.md",
             "spec/04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md",
-            "review/2026-07-26_MAPPING_UPDATE_REVIEW.md",
+            "review/2026-08-06_CANONIZATION_REVIEW.md",
             "review/test_publication.py",
+            "review/test_artifact_canon.py",
             ".github/workflows/docs.yml",
         ):
             self.assertIn(path, manifest)
-        self.assertIn("No independent content-review claim", manifest)
+        self.assertIn("No independent analytical-truth claim", manifest)
+        self.assertIn("0 normative surfaces", manifest)
+
+    def test_license_is_declared_and_present(self):
+        artifact = json.loads(ARTIFACT.read_text(encoding="utf-8"))
+        self.assertEqual(artifact["license"], "Apache-2.0")
+        self.assertTrue((ROOT / "LICENSE").is_file())
+        self.assertIn("Apache License", (ROOT / "LICENSE").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
