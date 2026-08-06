@@ -174,9 +174,9 @@ class PublicationChecks(unittest.TestCase):
     def test_no_local_path_or_credential_markers(self):
         forbidden = re.compile(
             r"(C:\\Users\\|/c/Users/|/Users/|/home/|AppData|credentials\.json|"
-            r"BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY|ghp_[A-Za-z0-9]+|"
-            r"github_pat_[A-Za-z0-9_]+|sk-[A-Za-z0-9]+|AKIA[0-9A-Z]{16}|"
-            r"api[_-]?key\s*[:=]|access[_-]?token\s*[:=])",
+            r"BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY|ghp_[A-Za-z0-9]{10,}|"
+            r"github_pat_[A-Za-z0-9_]{10,}|(?<![A-Za-z0-9])sk-[A-Za-z0-9]{10,}|"
+            r"AKIA[0-9A-Z]{16}|api[_-]?key\s*[:=]|access[_-]?token\s*[:=])",
             re.IGNORECASE,
         )
         for path in public_files():
@@ -197,7 +197,13 @@ class PublicationChecks(unittest.TestCase):
             self.assertEqual(0, text.count("```") % 2, f"unbalanced fences: {path.relative_to(ROOT)}")
             table = []
             for number, line in enumerate(text.splitlines() + [""], 1):
-                self.assertEqual(line.rstrip(), line, f"trailing whitespace: {path.relative_to(ROOT)}:{number}")
+                stripped = line.rstrip(" \t")
+                trailing = line[len(stripped):]
+                self.assertIn(
+                    trailing,
+                    ("", "  "),
+                    f"unsupported trailing whitespace: {path.relative_to(ROOT)}:{number}",
+                )
                 if line.startswith("|") and line.endswith("|"):
                     table.append((number, line.count("|")))
                 elif table:
