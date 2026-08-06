@@ -158,7 +158,7 @@ class ArtifactCanonTests(unittest.TestCase):
         )
         scope = (ROOT / "spec" / "00_SCOPE_AND_STATUS.md").read_text(encoding="utf-8")
         for claim_class in artifact["claim_classes"]:
-            self.assertIn(claim_class, scope)
+            self.assertIn(claim_class.replace("_", " "), scope)
 
     def test_rejected_inference_chain_is_published(self) -> None:
         mapping = (ROOT / "spec" / "04_CROSS_SPECIFICATION_CLAIM_BOUNDARIES.md").read_text(
