@@ -96,8 +96,10 @@ From the repository root:
 ```bash
 python -m unittest discover -s review -p "test_*.py" -v
 python -m json.tool ARTIFACT.json >/dev/null
-git show --check --oneline HEAD
+git -c core.whitespace=-blank-at-eol show --check --oneline HEAD
 ```
+
+The Git command preserves checks for other whitespace errors while the ARB publication checker separately allows only no trailing spaces or the exact two-space Markdown hard break.
 
 GitHub Actions runs the Python suite on Python 3.10, 3.11, 3.12, and 3.13.
 
