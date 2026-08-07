@@ -65,8 +65,8 @@ class ArtifactCanonTests(unittest.TestCase):
         self.assertEqual(artifact["schema_version"], "1.0")
         self.assertEqual(artifact["artifact_id"], "claude.arb")
         self.assertEqual(artifact["repository"], "gv1983us-commits/agent-runtime-boundaries")
-        self.assertEqual(artifact["artifact_version"], "0.3-draft")
-        self.assertEqual(artifact["artifact_status"], "canonical_public_draft")
+        self.assertEqual(artifact["artifact_version"], "0.3")
+        self.assertEqual(artifact["artifact_status"], "canonical_public")
         self.assertEqual(artifact["specification_status"], "descriptive_analytical_companion")
         self.assertEqual(artifact["license"], "Apache-2.0")
         self.assertEqual(artifact["normative_surface_count"], 0)
@@ -132,8 +132,8 @@ class ArtifactCanonTests(unittest.TestCase):
         manifest = PUBLICATION_MANIFEST.read_text(encoding="utf-8")
 
         for text in (canon, readme):
-            self.assertIn("0.3-draft", text)
-            self.assertIn("canonical_public_draft", text)
+            self.assertIn("0.3", text)
+            self.assertIn("canonical_public", text)
             self.assertIn("zero", text.lower())
             self.assertIn("normative", text.lower())
             self.assertIn("ARB-03", text)
