@@ -3,8 +3,8 @@
 **Artifact:** Agent Runtime Boundaries (ARB)  
 **Corpus identity:** `claude.arb`  
 **Repository:** `gv1983us-commits/agent-runtime-boundaries`  
-**Artifact version:** `0.3-draft`  
-**Canonical status:** `canonical_public_draft`  
+**Artifact version:** `0.3`  
+**Canonical status:** `canonical_public`  
 **Mode:** descriptive and analytical companion with one explicit operational proposal  
 **License:** Apache-2.0
 

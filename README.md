@@ -16,8 +16,8 @@ committed != PCA process continuation
 identity-profile continuity != personal identity
 ```
 
-**Artifact version:** `0.3-draft`  
-**Canonical status:** `canonical_public_draft`  
+**Artifact version:** `0.3`  
+**Canonical status:** `canonical_public`  
 **Mode:** descriptive and analytical companion  
 **Normative specification surfaces:** `0`  
 **License:** Apache-2.0

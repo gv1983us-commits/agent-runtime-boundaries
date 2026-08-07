@@ -1,7 +1,7 @@
 # Publication Manifest
 
-**Candidate:** Agent Runtime Boundaries 0.3-draft  
-**Status:** `canonical_public_draft` analytical artifact  
+**Candidate:** Agent Runtime Boundaries 0.3  
+**Status:** `canonical_public` analytical artifact  
 **Prepared:** 2026-08-06  
 **Normative specification surfaces:** 0
 
@@ -67,6 +67,10 @@ The 0.3 update adds:
 6. a current five-source receipt;
 7. artifact-canon tests;
 8. a complete 0.3 analytical corpus aligned around delivery, persistence, retrieval, working-state admission, commitment, and continuation.
+
+### Sealing pass (2026-08-07)
+
+The artifact version and canonical status dropped the `-draft` suffix (`0.3-draft` → `0.3`, `canonical_public_draft` → `canonical_public`) across `ARTIFACT.json`, `CANON.md`, `README.md`, and this manifest. ARB-03 remains an unadopted proposal; sealing the artifact envelope does not adopt it.
 
 ## Current fixed source revisions
 
