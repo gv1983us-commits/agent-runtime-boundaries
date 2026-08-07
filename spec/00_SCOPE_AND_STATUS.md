@@ -36,7 +36,7 @@ This document set does not define:
 
 ## 3. Canonical status and normative force
 
-ARB is a `canonical_public_draft` as an analytical artifact.
+ARB is a `canonical_public` analytical artifact.
 
 ```text
 canonical analytical artifact
